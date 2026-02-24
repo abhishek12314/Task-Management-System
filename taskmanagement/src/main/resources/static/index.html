@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amdox Task Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">TMS</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="register.html">Register</a>
+            <button id="themeToggle" class="theme-btn"> 🌙 </button>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Manage Tasks Faster With Your Team</h1>
+            <p>Organize projects, track progress, and collaborate in real time.</p>
+            <a href="dashboard.html" class="main-btn">Open Dashboard</a>
+        </section>
+
+        <section class="info">
+            <div>
+                <h3>Team Collaboration</h3>
+                <p>Work together with real-time updates and comments.</p>
+            </div>
+
+            <div>
+                <h3>Smart Analytics</h3>
+                <p>Track productivity and project progress easily.</p>
+            </div>
+
+            <div>
+                <h3>Secure Access</h3>
+                <p>Role-based permissions keep data safe.</p>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="copyright">
+            © 2026 Abhishek. All rights reserved.
+        </p>
+    </footer>
+
+</body>
+
+</html>
+<script>
+
+    const toggleBtn = document.getElementById("themeToggle");
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+        toggleBtn.textContent = "☀️";
+    }
+
+    toggleBtn.onclick = () => {
+
+        document.body.classList.toggle("dark");
+
+        if (document.body.classList.contains("dark")) {
+            localStorage.setItem("theme", "dark");
+            toggleBtn.textContent = "☀️";
+        } else {
+            localStorage.setItem("theme", "light");
+            toggleBtn.textContent = "🌙";
+        }
+
+    };
+
+</script>
