@@ -2,5 +2,6 @@
 target/
 *.log
 .DS_Store
+**/.DS_Store
 .env
 node_modules/
