@@ -1,2 +1,6 @@
-/.DS_Store
-/.vscode
+.vscode
+target/
+*.log
+.DS_Store
+.env
+node_modules/
