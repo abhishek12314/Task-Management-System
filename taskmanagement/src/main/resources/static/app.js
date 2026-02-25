@@ -190,3 +190,11 @@ window.onload = () => {
     const saved = localStorage.getItem("theme") || "light";
     setTheme(saved);
 };
+
+const token = localStorage.getItem("token");
+
+fetch("http://localhost:8080/api/tasks", {
+    headers: {
+        "Authorization": "Bearer " + token
+    }
+})
