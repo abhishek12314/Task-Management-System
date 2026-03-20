@@ -2,63 +2,76 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Admin Dashboard</title>
+
     <link rel="stylesheet" href="styles.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <canvas id="chart"></canvas>
+
 </head>
 
 <body>
-    <div class="layout">
-        <div class="header">
-            <h2>TaskManager</h2>
-            <div class="nav-right">
-                <a href="tasks.html">📋 Tasks</a>
 
-                <a href="login.html">🚪 Logout</a>
+    <header class="navbar">
 
-                <button onclick="toggleDarkMode()" class="dark-toggle">
-                    🌙 Dark Mode
-                </button>
-            </div>
-        </div>
+        <div class="logo">TMS Admin</div>
 
-        <div class="main">
+        <nav>
+            <a href="tasks.html">Tasks</a>
+            <button onclick="logout()">Logout</button>
+            <button id="themeToggle">🌙</button>
+        </nav>
 
-            <div class="page">
+    </header>
 
-                <h1 class="page-title">Admin Dashboard</h1>
-                <p class="subtitle">Monitor platform activity</p>
 
-                <div class="stats">
+    <main class="admin-page">
 
-                    <div class="stat">
-                        Users
-                        <span id="users">0</span>
-                    </div>
+        <h1>Admin Dashboard</h1>
 
-                    <div class="stat">
-                        Tasks
-                        <span id="tasks">0</span>
-                    </div>
+        <div class="stats">
 
-                    <div class="stat">
-                        Completed
-                        <span id="done">0</span>
-                    </div>
-
-                </div>
-
+            <div class="stat">
+                Users
+                <span id="users">0</span>
             </div>
 
-            <script src="app.js"></script>
-            <script>
-                loadAdminStats()
-            </script>
+            <div class="stat">
+                Tasks
+                <span id="tasks">0</span>
+            </div>
+
+            <div class="stat">
+                Completed
+                <span id="done">0</span>
+            </div>
+
         </div>
-    </div>
+
+        <canvas id="chart"></canvas>
+
+
+        <h2>User Tasks</h2>
+
+        <input type="text" id="searchUser" placeholder="Search user..." onkeyup="searchUsers()" />
+
+        <div id="usersContainer"></div>
+
+    </main>
+
+    <script src="app.js"></script>
+
+    <script>
+
+        loadAdminStats()
+        loadTasksByUser()
+
+    </script>
+
 </body>
 
 </html>

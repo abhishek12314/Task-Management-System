@@ -136,6 +136,48 @@ function loadAdminStats() {
         })
 
 }
+function loadTasksByUser() {
+
+    fetch(API + "/admin/tasks-by-user")
+        .then(res => res.json())
+        .then(users => {
+
+            const container = document.getElementById("usersContainer")
+            container.innerHTML = ""
+
+            users.forEach(user => {
+
+                const block = document.createElement("div")
+                block.className = "user-block"
+
+                let tasksHTML = ""
+
+                user.tasks.forEach(task => {
+
+                    tasksHTML += `
+    <div class="task-row">
+    <b>${task.title}</b>
+    <span>${task.status}</span>
+    </div>
+    `
+
+                })
+
+                block.innerHTML = `
+    <h3>${user.userName}</h3>
+    <div class="task-list">
+    ${tasksHTML}
+    </div>
+    `
+
+                container.appendChild(block)
+
+            })
+
+        })
+
+}
+
 function editTask(id) {
 
     const title = prompt("New title")
@@ -174,6 +216,32 @@ function renderChart(data) {
     })
 
 }
+function searchUsers() {
+
+    const search = document
+        .getElementById("searchUser")
+        .value
+        .toLowerCase()
+
+    const users = document
+        .querySelectorAll(".user-block")
+
+    users.forEach(user => {
+
+        const name = user
+            .querySelector("h3")
+            .innerText
+            .toLowerCase()
+
+        user.style.display =
+            name.includes(search)
+                ? "block"
+                : "none"
+
+    })
+
+}
+
 const themeBtn = document.getElementById("themeToggle");
 
 function setTheme(mode) {

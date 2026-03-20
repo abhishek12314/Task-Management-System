@@ -54,7 +54,6 @@
 
 </html>
 <script>
-
     document.getElementById("loginForm").addEventListener("submit", async function (e) {
 
         e.preventDefault();
@@ -62,33 +61,44 @@
         const email = document.querySelector("input[type='email']").value;
         const password = document.querySelector("input[type='password']").value;
 
-        const response = await fetch("http://localhost:8080/api/auth/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
+        try {
 
-        if (response.ok) {
+            const res = await fetch("http://localhost:8080/api/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
 
-            const data = await response.json();
+            if (!res.ok) {
+                alert("Invalid email or password");
+                return;
+            }
 
-            localStorage.setItem("user", JSON.stringify(data));
+            const data = await res.json();
 
-            window.location.href = "dashboard.html";
+            console.log("Login response:", data);
 
-        } else {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify({
+                id: data.id,
+                name: data.name,
+                email: data.email,
+                role: data.role
+            }));
 
-            alert("Invalid email or password");
+            window.location.href = "tasks.html";
 
+        } catch (err) {
+            console.error("Login error:", err);
+            alert("Server error. Check backend.");
         }
 
     });
-
 </script>
 <script>
 

@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,35 +28,39 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
+                .sessionManagement(session
+                        -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
                 .authorizeHttpRequests(auth -> auth
-                // allow frontend
                 .requestMatchers(
                         "/",
                         "/index.html",
                         "/login.html",
                         "/register.html",
                         "/dashboard.html",
-                        "/tasks.html",
-                        "/admin.html",
-                        "/features.html",
+                        "/tasks.html"
+                ).permitAll()
+                .requestMatchers(
+                        "/css/**",
+                        "/js/**",
+                        "/images/**",
                         "/styles.css",
-                        "/app.js",
-                        "/features.js",
-                        "/images/**"
+                        "/favicon.ico",
+                        "/**/*.css",
+                        "/**/*.js"
                 ).permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/admin/**")
-                .hasRole("ADMIN")
-                .requestMatchers("/api/tasks/**")
-                .hasAnyRole("USER", "ADMIN")
+                .requestMatchers("/api/tasks/**").authenticated()
+                .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtFilter,
-                    UsernamePasswordAuthenticationFilter.class);
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

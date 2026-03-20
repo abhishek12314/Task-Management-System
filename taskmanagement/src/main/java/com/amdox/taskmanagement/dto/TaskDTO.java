@@ -2,14 +2,20 @@ package com.amdox.taskmanagement.dto;
 
 import java.time.LocalDate;
 
-public class TaskRequest {
+import com.amdox.taskmanagement.model.Task.TaskStatus;
+
+public class TaskDTO {
 
     private String title;
     private String description;
     private String priority;
-    private String status;
+    private TaskStatus status;
     private LocalDate deadline;
     private Long userId;
+    private Long projectId;
+
+    public TaskDTO() {
+    }
 
     public String getTitle() {
         return title;
@@ -35,11 +41,11 @@ public class TaskRequest {
         this.priority = priority;
     }
 
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 
@@ -57,5 +63,13 @@ public class TaskRequest {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }

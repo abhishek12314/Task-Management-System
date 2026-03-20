@@ -20,4 +20,36 @@ public class Comment {
 
     @ManyToOne
     private Task task;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
 }

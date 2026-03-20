@@ -17,17 +17,8 @@
             <a href="dashboard.html">Dashboard</a>
             <button class="logout-btn" onclick="logout()">Logout</button>
             <button id="themeToggle" class="theme-btn">🌙</button>
-            <script>
-
-                function logout() {
-                    localStorage.removeItem("user");
-                    window.location.href = "login.html";
-                }
-
-            </script>
         </nav>
     </header>
-
 
     <main class="task-page">
 
@@ -35,12 +26,12 @@
 
         <div class="task-controls">
 
-            <input id="taskTitle" placeholder="Task title">
+            <input id="taskTitle" type="text" placeholder="Task title">
 
             <select id="taskStatus">
-                <option value="todo">To Do</option>
-                <option value="progress">In Progress</option>
-                <option value="done">Completed</option>
+                <option value="TODO">To Do</option>
+                <option value="IN_PROGRESS">In Progress</option>
+                <option value="DONE">Completed</option>
             </select>
 
             <input type="date" id="taskReminder">
@@ -48,7 +39,6 @@
             <button onclick="addTask()">Add Task</button>
 
         </div>
-
 
         <div class="board">
 
@@ -71,33 +61,41 @@
 
     </main>
 
-
     <footer class="footer">
         <p class="copyright">© 2026 Abhishek. All rights reserved.</p>
     </footer>
 
     <script src="tasks.js"></script>
 
+    <script>
+
+        function logout() {
+            localStorage.removeItem("user");
+            localStorage.removeItem("token");
+            window.location.href = "login.html";
+        }
+
+        const toggleBtn = document.getElementById("themeToggle");
+
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark");
+            toggleBtn.textContent = "☀️";
+        }
+
+        toggleBtn.onclick = () => {
+            document.body.classList.toggle("dark");
+
+            if (document.body.classList.contains("dark")) {
+                localStorage.setItem("theme", "dark");
+                toggleBtn.textContent = "☀️";
+            } else {
+                localStorage.setItem("theme", "light");
+                toggleBtn.textContent = "🌙";
+            }
+        };
+
+    </script>
+
 </body>
 
 </html>
-<script>
-
-    const toggleBtn = document.getElementById("themeToggle");
-
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark");
-        toggleBtn.textContent = "☀️";
-    }
-
-    toggleBtn.onclick = () => {
-        document.body.classList.toggle("dark");
-        if (document.body.classList.contains("dark")) {
-            localStorage.setItem("theme", "dark");
-            toggleBtn.textContent = "☀️";
-        } else {
-            localStorage.setItem("theme", "light");
-            toggleBtn.textContent = "🌙";
-        }
-    };
-</script>

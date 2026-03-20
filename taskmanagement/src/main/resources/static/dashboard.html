@@ -13,8 +13,6 @@
         <div class="logo">TMS</div>
 
         <nav>
-            <!-- <a href="index.html">Home</a>
-            <a href="features.html">Features</a> -->
             <a href="tasks.html" class="task-btn">Tasks</a>
             <button class="logout-btn" onclick="logout()">Logout</button>
             <button id="themeToggle" class="theme-btn">🌙</button>
@@ -30,7 +28,28 @@
     </header>
     <main>
         <section class="dashboard">
-            <h1>DashBoard</h1>
+
+            <h1>Dashboard</h1>
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <h3>Total Tasks</h3>
+                    <p id="totalTasks">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>In Progress</h3>
+                    <p id="progressCount">0</p>
+                </div>
+
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <p id="doneCount">0</p>
+                </div>
+
+            </div>
+
             <div class="board">
 
                 <div class="column">
@@ -51,6 +70,7 @@
             </div>
 
         </section>
+
     </main>
     <footer class="footer">
         <p class="copyright">
@@ -106,29 +126,46 @@
         document.getElementById("progressList").innerHTML = "";
         document.getElementById("doneList").innerHTML = "";
 
+        let total = 0;
+        let progress = 0;
+        let done = 0;
+
         tasks.forEach(task => {
+
+            total++;
 
             const div = document.createElement("div");
             div.className = "task";
 
             div.innerHTML = `
-            <b>${task.title}</b>
-            <p>${task.deadline ?? ""}</p>
-            `;
+<h4>${task.title}</h4>
+<p class="deadline">${task.deadline ?? ""}</p>
+<span class="priority">${task.priority ?? ""}</span>
+`;
 
-            if (task.status === "TODO")
+            if (task.status === "TODO") {
                 document.getElementById("todoList").appendChild(div);
+            }
 
-            if (task.status === "PROGRESS")
+            if (task.status === "IN_PROGRESS") {
+                progress++;
                 document.getElementById("progressList").appendChild(div);
+            }
 
-            if (task.status === "DONE")
+            if (task.status === "DONE") {
+                done++;
                 document.getElementById("doneList").appendChild(div);
+            }
 
         });
+
+        document.getElementById("totalTasks").innerText = total;
+        document.getElementById("progressCount").innerText = progress;
+        document.getElementById("doneCount").innerText = done;
 
     }
 
     loadDashboardTasks();
+
 
 </script>
